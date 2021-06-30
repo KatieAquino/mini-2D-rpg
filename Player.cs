@@ -4,15 +4,42 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Stats")]
+    public float moveSpeed;
+
+    private Vector2 facingDirection;
+
+    [Header("Sprites")]
+    public Sprite downSprite;
+    public Sprite upSprite;
+    public Sprite leftSprite;
+    public Sprite rightSprite;
+
+    // Components
+    private Rigidbody2D rig;
+
+    void Awake()
     {
-        
+        // Get the components.
+        rig = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        Move();
+    }
+
+    void Move()
+    {
+        // Get the horizontal & vertical keyboard inputs.
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+
+        Vector2 vel = new Vector2(x, y);
+
+        if (vel.magnitude != 0)
+            facingDirection = vel;
         
+        rig.velocity = vel * moveSpeed;
     }
 }
